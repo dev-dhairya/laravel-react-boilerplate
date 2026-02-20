@@ -1,0 +1,104 @@
+@use '../abstracts' as *;
+
+// ============================================
+// Legal Pages — Terms & Privacy (BEM)
+// ============================================
+
+.legal {
+    padding: $spacing-12 0 $spacing-20;
+    background-color: $color-white;
+
+    @include respond-to('md') {
+        padding: $spacing-16 0 $spacing-32;
+    }
+
+    &__container {
+        @include container;
+        max-width: 48rem;
+    }
+
+    &__header {
+        margin-bottom: $spacing-12;
+        padding-bottom: $spacing-8;
+        border-bottom: 1px solid $color-gray-200;
+    }
+
+    &__title {
+        font-size: $font-size-3xl;
+        font-weight: $font-weight-extrabold;
+        color: $color-secondary;
+        margin-bottom: $spacing-3;
+
+        @include respond-to('md') {
+            font-size: $font-size-4xl;
+        }
+    }
+
+    &__updated {
+        font-size: $font-size-sm;
+        color: $color-gray-400;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-10;
+    }
+
+    &__section {
+        h2 {
+            font-size: $font-size-xl;
+            font-weight: $font-weight-semibold;
+            color: $color-secondary;
+            margin-bottom: $spacing-4;
+        }
+
+        h3 {
+            font-size: $font-size-base;
+            font-weight: $font-weight-semibold;
+            color: $color-gray-700;
+            margin-top: $spacing-5;
+            margin-bottom: $spacing-3;
+        }
+
+        p {
+            font-size: $font-size-base;
+            color: $color-gray-600;
+            line-height: $line-height-relaxed;
+            margin-bottom: $spacing-4;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        a {
+            color: $color-primary;
+            font-weight: $font-weight-medium;
+
+            &:hover {
+                color: $color-primary-dark;
+                text-decoration: underline;
+            }
+        }
+
+        ul {
+            margin-bottom: $spacing-4;
+            padding-left: $spacing-6;
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-2;
+
+            li {
+                font-size: $font-size-base;
+                color: $color-gray-600;
+                line-height: $line-height-relaxed;
+                list-style-type: disc;
+
+                &::marker {
+                    color: $color-primary;
+                }
+            }
+        }
+    }
+}

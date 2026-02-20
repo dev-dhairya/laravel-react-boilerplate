@@ -17,6 +17,11 @@
 
     &__input {
         @include input-base;
+
+        &--textarea {
+            resize: vertical;
+            min-height: 7rem;
+        }
     }
 
     &__error {

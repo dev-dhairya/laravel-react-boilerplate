@@ -1,6 +1,7 @@
 import React, { FormEvent } from 'react';
-import { Head, useForm, usePage } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import GuestLayout from '@/layouts/GuestLayout';
+import Seo from '@/components/Seo/Seo';
 import Input from '@/components/ui/Input/Input';
 import Button from '@/components/ui/Button/Button';
 import type { PageProps, User } from '@/types';
@@ -34,7 +35,12 @@ const Profile: React.FC = () => {
 
     return (
         <GuestLayout>
-            <Head title="Profile" />
+            <Seo
+                title="Profile"
+                description="Manage your account settings and update your password."
+                path="/profile"
+                noIndex
+            />
 
             <div className="profile">
                 <div className="profile__container">

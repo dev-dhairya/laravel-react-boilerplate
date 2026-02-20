@@ -16,6 +16,7 @@ export interface PageProps {
         error?: string;
     };
     appName: string;
+    appUrl: string;
     [key: string]: unknown;
 }
 

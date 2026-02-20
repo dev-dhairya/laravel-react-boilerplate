@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, usePage, router } from '@inertiajs/react';
 import Logo from '@/components/ui/Logo/Logo';
-import Button from '@/components/ui/Button/Button';
 import type { PageProps } from '@/types';
 
 const Header: React.FC = () => {
@@ -24,6 +23,7 @@ const Header: React.FC = () => {
         { label: 'Home', href: '/' },
         { label: 'Features', href: '/#features' },
         { label: 'About', href: '/#about' },
+        { label: 'Contact Us', href: '/contact' },
     ];
 
     const handleLogout = () => {
@@ -115,14 +115,9 @@ const Header: React.FC = () => {
                             )}
                         </div>
                     ) : (
-                        <>
-                            <Link href="/login" className="header__nav-link">
-                                Sign In
-                            </Link>
-                            <Button variant="primary" size="sm" as="a" href="/register">
-                                Get Started
-                            </Button>
-                        </>
+                        <Link href="/login" className="header__nav-link">
+                            Sign In
+                        </Link>
                     )}
 
                     <button

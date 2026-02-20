@@ -122,3 +122,120 @@
         flex-wrap: wrap;
     }
 }
+
+// Author / Developed By Section
+.home-author {
+    padding: $spacing-16 0;
+    background-color: $color-gray-50;
+
+    @include respond-to('md') {
+        padding: $spacing-20 0;
+    }
+
+    &__container {
+        @include container;
+        max-width: 40rem;
+    }
+
+    &__card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $spacing-6;
+        padding: $spacing-10;
+        background-color: $color-white;
+        border-radius: $radius-2xl;
+        border: 1px solid $color-gray-200;
+        box-shadow: $shadow-sm;
+        text-align: center;
+
+        @include respond-to('sm') {
+            flex-direction: row;
+            text-align: left;
+        }
+    }
+
+    &__avatar {
+        width: 5rem;
+        height: 5rem;
+        border-radius: $radius-full;
+        background: linear-gradient(135deg, $color-primary, $color-primary-light);
+        color: $color-white;
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-extrabold;
+        @include flex-center;
+        flex-shrink: 0;
+    }
+
+    &__info {
+        min-width: 0;
+    }
+
+    &__label {
+        font-size: $font-size-xs;
+        font-weight: $font-weight-semibold;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: $color-primary;
+        margin-bottom: $spacing-1;
+    }
+
+    &__name {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $color-secondary;
+        margin-bottom: $spacing-2;
+    }
+
+    &__bio {
+        font-size: $font-size-sm;
+        color: $color-gray-500;
+        line-height: $line-height-relaxed;
+        margin-bottom: $spacing-4;
+    }
+
+    &__links {
+        display: flex;
+        gap: $spacing-4;
+        justify-content: center;
+
+        @include respond-to('sm') {
+            justify-content: flex-start;
+        }
+    }
+
+    &__link {
+        display: inline-flex;
+        align-items: center;
+        gap: $spacing-2;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: $color-gray-600;
+        @include transition(color);
+
+        &:hover {
+            color: $color-primary;
+        }
+
+        svg {
+            width: 1rem;
+            height: 1rem;
+        }
+    }
+
+    &__open-source {
+        text-align: center;
+        margin-top: $spacing-6;
+        font-size: $font-size-sm;
+        color: $color-gray-400;
+
+        a {
+            color: $color-primary;
+            font-weight: $font-weight-medium;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

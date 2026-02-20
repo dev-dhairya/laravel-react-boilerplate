@@ -16,11 +16,26 @@ class RegisterController extends Controller
 {
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        return Inertia::render('Auth/Register', [
+            'token' => encrypt(now()->timestamp),
+        ]);
     }
 
     public function store(RegisterRequest $request): RedirectResponse
     {
+        if ($request->filled('company')) {
+            return redirect()->intended('/');
+        }
+
+        try {
+            $loadedAt = decrypt($request->input('_token_ts'));
+            if (now()->timestamp - $loadedAt < 3) {
+                return back()->withErrors(['email' => 'Please take a moment to fill out the form.']);
+            }
+        } catch (\Exception) {
+            return back()->withErrors(['email' => 'Invalid form submission. Please refresh and try again.']);
+        }
+
         $user = User::create([
             'name' => $request->validated('name'),
             'email' => $request->validated('email'),

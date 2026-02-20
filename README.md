@@ -67,21 +67,27 @@ Open **http://localhost:8000** in your browser.
 
 ```
 ├── app/
-│   └── Http/
-│       ├── Controllers/
-│       │   ├── Auth/
-│       │   │   ├── LoginController.php       # Login / Logout
-│       │   │   └── RegisterController.php    # Registration
-│       │   ├── HomeController.php            # Homepage
-│       │   └── ProfileController.php         # Profile & password change
-│       ├── Middleware/
-│       │   └── HandleInertiaRequests.php     # Shared Inertia props (auth, flash)
-│       └── Requests/
-│           ├── Auth/
-│           │   ├── LoginRequest.php          # Login validation + rate limiting
-│           │   └── RegisterRequest.php       # Registration validation
-│           └── Profile/
-│               └── ChangePasswordRequest.php # Password change validation
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Auth/
+│   │   │   │   ├── LoginController.php       # Login / Logout
+│   │   │   │   └── RegisterController.php    # Registration (honeypot + timestamp protection)
+│   │   │   ├── ContactController.php         # Contact form (honeypot + timestamp protection)
+│   │   │   ├── HomeController.php            # Homepage
+│   │   │   ├── PageController.php            # Static pages (Terms, Privacy)
+│   │   │   └── ProfileController.php         # Profile & password change
+│   │   ├── Middleware/
+│   │   │   └── HandleInertiaRequests.php     # Shared Inertia props (auth, flash, appUrl)
+│   │   └── Requests/
+│   │       ├── Auth/
+│   │       │   ├── LoginRequest.php          # Login validation + rate limiting
+│   │       │   └── RegisterRequest.php       # Registration validation + honeypot
+│   │       ├── ContactRequest.php            # Contact form validation + honeypot
+│   │       └── Profile/
+│   │           └── ChangePasswordRequest.php # Password change validation
+│   └── Models/
+│       ├── Contact.php                       # Contact form submissions
+│       └── User.php                          # User model
 │
 ├── resources/
 │   ├── js/
@@ -99,16 +105,22 @@ Open **http://localhost:8000** in your browser.
 │   │   │   ├── ui/                           # Primitive UI components
 │   │   │   │   ├── Button/Button.tsx         # Button with variants & sizes
 │   │   │   │   ├── Input/Input.tsx           # Form field with label & error
+│   │   │   │   ├── Textarea/Textarea.tsx     # Textarea with label & error
 │   │   │   │   └── Logo/Logo.tsx             # Brand logo
+│   │   │   ├── Seo/Seo.tsx                   # SEO meta tags, OG tags, canonical
 │   │   │   ├── Header/Header.tsx             # Sticky header + user dropdown
 │   │   │   ├── Footer/Footer.tsx             # Site footer
 │   │   │   └── Hero/Hero.tsx                 # Landing page hero
 │   │   └── pages/                            # Inertia page components
 │   │       ├── Home.tsx                      # Homepage
+│   │       ├── Contact.tsx                   # Contact Us form
 │   │       ├── Profile.tsx                   # User profile + change password
-│   │       └── Auth/
-│   │           ├── Login.tsx                 # Sign in form
-│   │           └── Register.tsx              # Sign up form
+│   │       ├── Auth/
+│   │       │   ├── Login.tsx                 # Sign in form
+│   │       │   └── Register.tsx              # Sign up form
+│   │       └── Legal/
+│   │           ├── Terms.tsx                 # Terms & Conditions
+│   │           └── Privacy.tsx               # Privacy Policy
 │   │
 │   ├── scss/                                 # SCSS with BEM methodology
 │   │   ├── app.scss                          # Main entry (imports everything)
@@ -124,10 +136,13 @@ Open **http://localhost:8000** in your browser.
 │   │   └── pages/                            # Page-specific styles
 │   │
 │   └── views/
-│       └── app.blade.php                     # Inertia root Blade template
+│       └── app.blade.php                     # Inertia root template (SEO defaults, favicons)
+│
+├── public/
+│   └── robots.txt                            # Search engine crawl rules
 │
 ├── routes/
-│   └── web.php                               # All application routes
+│   └── web.php                               # All routes + sitemap.xml
 │
 ├── vite.config.ts                            # Vite + React + SCSS configuration
 └── tsconfig.json                             # TypeScript configuration
@@ -159,7 +174,8 @@ Every page automatically receives these props via `HandleInertiaRequests` middle
 {
     auth: { user: User | null },  // Current authenticated user
     flash: { success?, error? },  // Flash messages from redirects
-    appName: string               // Application name
+    appName: string,              // Application name
+    appUrl: string                // Base URL (used by SEO component)
 }
 ```
 
@@ -216,8 +232,8 @@ Create `resources/js/pages/Dashboard.tsx`:
 
 ```tsx
 import React from 'react';
-import { Head } from '@inertiajs/react';
 import GuestLayout from '@/layouts/GuestLayout';
+import Seo from '@/components/Seo/Seo';
 
 interface DashboardProps {
     stats: { users: number };
@@ -226,7 +242,11 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ stats }) => {
     return (
         <GuestLayout>
-            <Head title="Dashboard" />
+            <Seo
+                title="Dashboard"
+                description="View your project statistics and activity."
+                path="/dashboard"
+            />
             <div className="dashboard">
                 <h1 className="dashboard__title">Dashboard</h1>
                 <p>Total users: {stats.users}</p>
@@ -353,13 +373,125 @@ import { useAuth } from '@/hooks/useAuth';
 | Method | URI | Name | Controller | Auth |
 |--------|-----|------|------------|------|
 | GET | `/` | home | HomeController@index | No |
+| GET | `/terms` | terms | PageController@terms | No |
+| GET | `/privacy` | privacy | PageController@privacy | No |
+| GET | `/contact` | contact | ContactController@create | No |
+| POST | `/contact` | — | ContactController@store | No (rate limited) |
+| GET | `/sitemap.xml` | — | Closure | No |
 | GET | `/login` | login | LoginController@create | Guest |
 | POST | `/login` | — | LoginController@store | Guest |
 | GET | `/register` | register | RegisterController@create | Guest |
-| POST | `/register` | — | RegisterController@store | Guest |
+| POST | `/register` | — | RegisterController@store | Guest (rate limited) |
 | POST | `/logout` | logout | LoginController@destroy | Yes |
 | GET | `/profile` | profile | ProfileController@edit | Yes |
 | PUT | `/profile/password` | profile.password | ProfileController@changePassword | Yes |
+
+---
+
+## SEO
+
+Every page uses a reusable `<Seo>` component (`resources/js/components/Seo/Seo.tsx`) that renders all essential SEO tags via Inertia's `<Head>`.
+
+### Usage
+
+```tsx
+<Seo
+    title="Contact Us"
+    description="Get in touch with us."
+    path="/contact"
+/>
+```
+
+### Available Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | `string` | *required* | Page title (appended with app name) |
+| `description` | `string` | Boilerplate tagline | Meta description |
+| `path` | `string` | — | URL path for canonical + og:url |
+| `ogType` | `'website' \| 'article'` | `'website'` | Open Graph type |
+| `ogImage` | `string` | `/images/og-default.png` | OG image path |
+| `noIndex` | `boolean` | `false` | Adds `noindex, nofollow` for private pages |
+
+### What Gets Rendered
+
+Each page automatically gets:
+- `<meta name="description">` — unique per page
+- `<link rel="canonical">` — prevents duplicate content
+- `og:title`, `og:description`, `og:url`, `og:image`, `og:site_name`, `og:type`, `og:locale`
+- `twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`
+- Optional `robots` noindex for private pages (e.g., Profile)
+
+### Sitemap & Robots
+
+- **`/sitemap.xml`** — Dynamic XML sitemap with all public pages, served via a route
+- **`public/robots.txt`** — Allows crawling of public pages, blocks `/profile`, `/login`, `/register`
+
+### OG Image
+
+Place your Open Graph default image at `public/images/og-default.png` (recommended size: 1200×630px). Override per-page with the `ogImage` prop.
+
+---
+
+## Form Security
+
+Public forms (Contact, Register) are protected with three layers of anti-spam security:
+
+### 1. Rate Limiting
+
+Laravel's `throttle` middleware limits form submissions per IP:
+
+| Form | Limit |
+|------|-------|
+| Contact | 3 submissions per 10 minutes |
+| Register | 5 submissions per 10 minutes |
+| Login | Uses `LoginRequest` built-in rate limiting |
+
+Exceeding the limit returns a `429 Too Many Requests` response.
+
+### 2. Honeypot Fields
+
+Each form includes a hidden field (invisible to real users, auto-filled by bots):
+
+| Form | Honeypot Field |
+|------|----------------|
+| Contact | `website` |
+| Register | `company` |
+
+If a bot fills the honeypot, the server silently returns a fake success — nothing is saved.
+
+### 3. Encrypted Timestamp Trap
+
+When a page loads, the server sends an encrypted timestamp. On form submission:
+- The controller decrypts it and checks if **at least 3 seconds** have passed
+- Instant submissions (bots) and tampered tokens are rejected
+
+### Adding Security to a New Form
+
+1. In the controller's `create` method, pass `'token' => encrypt(now()->timestamp)`
+2. Add a honeypot field and hidden `_token_ts` input to the React form
+3. In the `store` method, check the honeypot and decrypt/validate the timestamp
+4. Add `throttle` middleware to the POST route
+
+---
+
+## Contact Form
+
+The Contact Us page (`/contact`) allows visitors to send messages. Submissions are stored in the `contacts` database table.
+
+### Database Schema (`contacts` table)
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | bigint | Primary key |
+| `name` | string | Sender's full name |
+| `email` | string | Sender's email address |
+| `description` | text | Message content (min 10 chars, max 5000) |
+| `is_read` | boolean | Read status (default: `false`) |
+| `created_at` | timestamp | Submission time |
+| `updated_at` | timestamp | Last update time |
+
+Submissions can be viewed by querying the database directly or by building an admin panel.
 
 ---
 

@@ -1,6 +1,7 @@
 import React, { FormEvent } from 'react';
-import { Head, useForm, Link } from '@inertiajs/react';
+import { useForm, Link } from '@inertiajs/react';
 import AuthLayout from '@/layouts/AuthLayout';
+import Seo from '@/components/Seo/Seo';
 import Input from '@/components/ui/Input/Input';
 import Button from '@/components/ui/Button/Button';
 
@@ -27,7 +28,11 @@ const Login: React.FC = () => {
 
     return (
         <AuthLayout>
-            <Head title="Sign In" />
+            <Seo
+                title="Sign In"
+                description="Sign in to your account to access your dashboard and manage your projects."
+                path="/login"
+            />
 
             <div className="login">
                 <h1 className="login__title">Sign in to your account</h1>

@@ -1,23 +1,35 @@
 import React, { FormEvent } from 'react';
-import { Head, useForm, Link } from '@inertiajs/react';
+import { useForm, Link, usePage } from '@inertiajs/react';
 import AuthLayout from '@/layouts/AuthLayout';
+import Seo from '@/components/Seo/Seo';
 import Input from '@/components/ui/Input/Input';
 import Button from '@/components/ui/Button/Button';
+import type { PageProps } from '@/types';
+
+interface RegisterPageProps extends PageProps {
+    token: string;
+}
 
 interface RegisterForm {
     name: string;
     email: string;
     password: string;
     password_confirmation: string;
+    company: string;
+    _token_ts: string;
 }
 
 const Register: React.FC = () => {
+    const { token } = usePage<RegisterPageProps>().props;
+
     const { data, setData, post, processing, errors, reset } =
         useForm<RegisterForm>({
             name: '',
             email: '',
             password: '',
             password_confirmation: '',
+            company: '',
+            _token_ts: token,
         });
 
     const handleSubmit = (e: FormEvent) => {
@@ -29,7 +41,11 @@ const Register: React.FC = () => {
 
     return (
         <AuthLayout>
-            <Head title="Create Account" />
+            <Seo
+                title="Create Account"
+                description="Create a free account to get started. Build and ship your projects faster with our boilerplate."
+                path="/register"
+            />
 
             <div className="register">
                 <h1 className="register__title">Create your account</h1>
@@ -38,6 +54,21 @@ const Register: React.FC = () => {
                 </p>
 
                 <form className="register__form" onSubmit={handleSubmit}>
+                    <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', opacity: 0, height: 0, overflow: 'hidden' }}>
+                        <label htmlFor="company">Company</label>
+                        <input
+                            type="text"
+                            id="company"
+                            name="company"
+                            value={data.company}
+                            onChange={(e) => setData('company', e.target.value)}
+                            tabIndex={-1}
+                            autoComplete="off"
+                        />
+                    </div>
+
+                    <input type="hidden" name="_token_ts" value={data._token_ts} />
+
                     <Input
                         label="Full name"
                         type="text"
@@ -93,11 +124,11 @@ const Register: React.FC = () => {
                         <label className="register__checkbox-label">
                             <input type="checkbox" required />
                             I agree to the{' '}
-                            <a href="#" className="register__terms-link">
+                            <a href="/terms" target="_blank" className="register__terms-link">
                                 Terms of Service
                             </a>{' '}
                             and{' '}
-                            <a href="#" className="register__terms-link">
+                            <a href="/privacy" target="_blank" className="register__terms-link">
                                 Privacy Policy
                             </a>
                         </label>

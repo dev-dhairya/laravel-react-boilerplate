@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
-class RegisterRequest extends FormRequest
+class ContactRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -20,9 +18,9 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Password::defaults()],
-            'company' => ['nullable', 'max:0'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'description' => ['required', 'string', 'min:10', 'max:5000'],
+            'website' => ['nullable', 'max:0'],
             '_token_ts' => ['required', 'string'],
         ];
     }
@@ -33,9 +31,8 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.unique' => 'An account with this email already exists.',
-            'password.confirmed' => 'Passwords do not match.',
-            'company.max' => 'Invalid submission.',
+            'description.min' => 'Please provide at least 10 characters in your message.',
+            'website.max' => 'Invalid submission.',
         ];
     }
 }
