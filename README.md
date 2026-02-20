@@ -2,7 +2,7 @@
 
 A scalable, production-ready web application boilerplate built with **Laravel 12**, **React 19**, **TypeScript**, **Inertia.js**, and **SCSS (BEM methodology)**.
 
-> Developed by **[Dhairya Bhavsar](https://github.com/dhairya-bhavsar)** -- Open source and free to use for any project.
+> Developed by **[Dhairya Bhavsar](https://github.com/dev-dhairya)** -- Open source and free to use for any project.
 
 ## Tech Stack
 
@@ -558,7 +558,7 @@ This project is open-sourced software licensed under the [MIT License](LICENSE).
 
 **Dhairya Bhavsar**
 
-- GitHub: [@dhairya-bhavsar](https://github.com/dhairya-bhavsar)
+- GitHub: [@dhairya-bhavsar](https://github.com/dev-dhairya)
 
 ---
 
