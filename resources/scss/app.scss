@@ -1,0 +1,32 @@
+// ============================================
+// Main SCSS Entry Point
+// ============================================
+
+// --- Abstracts (no output, only variables/mixins/functions) ---
+@use 'abstracts/variables' as *;
+@use 'abstracts/breakpoints' as *;
+@use 'abstracts/mixins' as *;
+@use 'abstracts/functions' as *;
+
+// --- Base ---
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/base';
+
+// --- Layout ---
+@use 'layouts/guest';
+@use 'layouts/auth';
+
+// --- Components ---
+@use 'components/button';
+@use 'components/input';
+@use 'components/logo';
+@use 'components/header';
+@use 'components/footer';
+@use 'components/hero';
+
+// --- Pages ---
+@use 'pages/home';
+@use 'pages/login';
+@use 'pages/register';
+@use 'pages/profile';

@@ -1,0 +1,124 @@
+@use '../abstracts' as *;
+
+// ============================================
+// Home Page (BEM)
+// ============================================
+
+.home-features {
+    padding: $spacing-20 0;
+    background-color: $color-white;
+
+    @include respond-to('md') {
+        padding: $spacing-32 0;
+    }
+
+    &__container {
+        @include container;
+    }
+
+    &__header {
+        text-align: center;
+        max-width: 36rem;
+        margin: 0 auto $spacing-16;
+    }
+
+    &__title {
+        margin-bottom: $spacing-4;
+    }
+
+    &__subtitle {
+        font-size: $font-size-lg;
+        color: $color-gray-500;
+    }
+
+    &__grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: $spacing-8;
+
+        @include respond-to('md') {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+}
+
+.feature-card {
+    padding: $spacing-8;
+    background-color: $color-gray-50;
+    border-radius: $radius-xl;
+    border: 1px solid $color-gray-100;
+    @include transition(border-color, box-shadow);
+
+    &:hover {
+        border-color: $color-primary-100;
+        box-shadow: $shadow-md;
+    }
+
+    &__icon {
+        width: 3rem;
+        height: 3rem;
+        margin-bottom: $spacing-5;
+        @include flex-center;
+        background: linear-gradient(135deg, $color-primary-50, $color-primary-100);
+        border-radius: $radius-lg;
+        color: $color-primary;
+
+        svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+
+    &__title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $color-secondary;
+        margin-bottom: $spacing-3;
+    }
+
+    &__description {
+        font-size: $font-size-sm;
+        color: $color-gray-500;
+        line-height: $line-height-relaxed;
+    }
+}
+
+// CTA Section
+.home-cta {
+    padding: $spacing-20 0;
+    background-color: $color-secondary;
+
+    @include respond-to('md') {
+        padding: $spacing-24 0;
+    }
+
+    &__container {
+        @include container;
+        text-align: center;
+    }
+
+    &__title {
+        font-size: $font-size-3xl;
+        color: $color-white;
+        margin-bottom: $spacing-4;
+
+        @include respond-to('md') {
+            font-size: $font-size-4xl;
+        }
+    }
+
+    &__subtitle {
+        font-size: $font-size-lg;
+        color: $color-gray-400;
+        margin-bottom: $spacing-10;
+        max-width: 32rem;
+        margin-inline: auto;
+    }
+
+    &__actions {
+        display: flex;
+        gap: $spacing-4;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}

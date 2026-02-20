@@ -1,0 +1,284 @@
+@use '../abstracts' as *;
+
+// ============================================
+// Header Component (BEM)
+// ============================================
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: $z-sticky;
+    background-color: rgba($color-white, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid $color-gray-200;
+
+    &__container {
+        @include container;
+        @include flex-between;
+        height: 4rem;
+
+        @include respond-to('md') {
+            height: 4.5rem;
+        }
+    }
+
+    &__logo {
+        flex-shrink: 0;
+    }
+
+    &__nav {
+        display: none;
+
+        @include respond-to('md') {
+            display: flex;
+            align-items: center;
+            gap: $spacing-1;
+        }
+    }
+
+    &__nav-link {
+        padding: $spacing-2 $spacing-4;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: $color-gray-600;
+        border-radius: $radius-md;
+        @include transition(color, background-color);
+
+        &:hover {
+            color: $color-gray-900;
+            background-color: $color-gray-100;
+        }
+
+        &--active {
+            color: $color-primary;
+            background-color: $color-primary-50;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: $spacing-3;
+    }
+
+    // --- User Menu (Dropdown) ---
+
+    &__user-menu {
+        position: relative;
+    }
+
+    &__user-trigger {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+        padding: $spacing-1 $spacing-2;
+        border-radius: $radius-lg;
+        cursor: pointer;
+        @include transition(background-color);
+
+        &:hover {
+            background-color: $color-gray-100;
+        }
+    }
+
+    &__user-avatar {
+        width: 2rem;
+        height: 2rem;
+        border-radius: $radius-full;
+        background: linear-gradient(135deg, $color-primary, $color-primary-light);
+        color: $color-white;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
+        @include flex-center;
+        flex-shrink: 0;
+    }
+
+    &__user-name {
+        display: none;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: $color-gray-700;
+
+        @include respond-to('md') {
+            display: block;
+            max-width: 8rem;
+            @include text-truncate;
+        }
+    }
+
+    &__user-chevron {
+        display: none;
+        width: 1rem;
+        height: 1rem;
+        color: $color-gray-400;
+        @include transition(transform);
+
+        @include respond-to('md') {
+            display: block;
+        }
+
+        &--open {
+            transform: rotate(180deg);
+        }
+    }
+
+    &__dropdown {
+        position: absolute;
+        top: calc(100% + $spacing-2);
+        right: 0;
+        width: 14rem;
+        background-color: $color-white;
+        border: 1px solid $color-gray-200;
+        border-radius: $radius-xl;
+        box-shadow: $shadow-lg;
+        z-index: $z-dropdown;
+        overflow: hidden;
+        animation: header-dropdown-in 150ms ease;
+    }
+
+    &__dropdown-header {
+        padding: $spacing-3 $spacing-4;
+    }
+
+    &__dropdown-name {
+        display: block;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-semibold;
+        color: $color-secondary;
+        @include text-truncate;
+    }
+
+    &__dropdown-email {
+        display: block;
+        font-size: $font-size-xs;
+        color: $color-gray-500;
+        @include text-truncate;
+    }
+
+    &__dropdown-divider {
+        height: 1px;
+        background-color: $color-gray-100;
+    }
+
+    &__dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: $spacing-3;
+        width: 100%;
+        padding: $spacing-3 $spacing-4;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: $color-gray-700;
+        text-align: left;
+        cursor: pointer;
+        @include transition(background-color, color);
+
+        &:hover {
+            background-color: $color-gray-50;
+            color: $color-gray-900;
+        }
+
+        svg {
+            width: 1rem;
+            height: 1rem;
+            flex-shrink: 0;
+            color: $color-gray-400;
+        }
+
+        &--danger {
+            color: $color-error;
+
+            &:hover {
+                background-color: rgba($color-error, 0.05);
+                color: $color-error;
+            }
+
+            svg {
+                color: $color-error;
+            }
+        }
+    }
+
+    // --- Mobile Toggle ---
+
+    &__mobile-toggle {
+        display: flex;
+        padding: $spacing-2;
+        color: $color-gray-600;
+        border-radius: $radius-md;
+
+        @include respond-to('md') {
+            display: none;
+        }
+
+        &:hover {
+            background-color: $color-gray-100;
+        }
+
+        svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+
+    // --- Mobile Menu ---
+
+    &__mobile-menu {
+        display: none;
+        padding: $spacing-4 $container-padding;
+        border-top: 1px solid $color-gray-200;
+        background-color: $color-white;
+
+        @include respond-to('md') {
+            display: none !important;
+        }
+
+        &--open {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-2;
+        }
+    }
+
+    &__mobile-link {
+        display: block;
+        padding: $spacing-3 $spacing-4;
+        font-size: $font-size-base;
+        font-weight: $font-weight-medium;
+        color: $color-gray-700;
+        border-radius: $radius-md;
+        text-align: left;
+        width: 100%;
+        cursor: pointer;
+        @include transition(background-color);
+
+        &:hover {
+            background-color: $color-gray-50;
+        }
+
+        &--danger {
+            color: $color-error;
+
+            &:hover {
+                background-color: rgba($color-error, 0.05);
+            }
+        }
+    }
+
+    &__mobile-divider {
+        height: 1px;
+        background-color: $color-gray-100;
+        margin: $spacing-1 0;
+    }
+}
+
+@keyframes header-dropdown-in {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

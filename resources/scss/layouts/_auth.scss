@@ -1,0 +1,85 @@
+@use '../abstracts' as *;
+
+// ============================================
+// Auth Layout (BEM)
+// ============================================
+
+.auth-layout {
+    display: flex;
+    min-height: 100vh;
+
+    &__sidebar {
+        display: none;
+        position: relative;
+        flex: 1;
+        background: linear-gradient(135deg, $color-primary, $color-primary-dark);
+        overflow: hidden;
+
+        @include respond-to('lg') {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    &__sidebar-content {
+        position: relative;
+        z-index: 1;
+        padding: $spacing-16;
+        max-width: 28rem;
+        color: $color-white;
+    }
+
+    &__sidebar-title {
+        font-size: $font-size-4xl;
+        font-weight: $font-weight-extrabold;
+        color: $color-white;
+        margin-bottom: $spacing-6;
+        letter-spacing: -0.02em;
+    }
+
+    &__sidebar-text {
+        font-size: $font-size-lg;
+        color: rgba($color-white, 0.8);
+        line-height: $line-height-relaxed;
+    }
+
+    &__sidebar-decoration {
+        position: absolute;
+        inset: 0;
+        opacity: 0.1;
+        background-image:
+            radial-gradient(circle at 20% 50%, $color-white 1px, transparent 1px),
+            radial-gradient(circle at 80% 20%, $color-white 1px, transparent 1px),
+            radial-gradient(circle at 40% 80%, $color-white 1.5px, transparent 1.5px);
+        background-size: 60px 60px, 80px 80px, 100px 100px;
+    }
+
+    &__content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: $spacing-8;
+        background-color: $color-gray-50;
+
+        @include respond-to('lg') {
+            flex: none;
+            width: 50%;
+            max-width: 40rem;
+        }
+    }
+
+    &__form-wrapper {
+        width: 100%;
+        max-width: 24rem;
+    }
+
+    &__logo {
+        margin-bottom: $spacing-10;
+
+        @include respond-to('lg') {
+            margin-bottom: $spacing-12;
+        }
+    }
+}

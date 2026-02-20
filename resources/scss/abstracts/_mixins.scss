@@ -1,0 +1,82 @@
+@use 'sass:list';
+@use 'sass:color';
+@use 'variables' as *;
+
+// ============================================
+// Reusable Mixins
+// ============================================
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@mixin container {
+    width: 100%;
+    max-width: $container-max-width;
+    margin-inline: auto;
+    padding-inline: $container-padding;
+}
+
+@mixin text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@mixin transition($properties...) {
+    @if list.length($properties) > 0 {
+        transition-property: $properties;
+    } @else {
+        transition-property: all;
+    }
+    transition-duration: 250ms;
+    transition-timing-function: ease;
+}
+
+@mixin focus-ring {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+}
+
+@mixin input-base {
+    width: 100%;
+    padding: $spacing-3 $spacing-4;
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+    line-height: $line-height-base;
+    color: $color-gray-900;
+    background-color: $color-white;
+    border: 1px solid $color-gray-300;
+    border-radius: $radius-lg;
+    @include transition(border-color, box-shadow);
+
+    &::placeholder {
+        color: $color-gray-400;
+    }
+
+    &:focus {
+        border-color: $color-primary;
+        box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+        outline: none;
+    }
+}

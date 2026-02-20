@@ -1,0 +1,38 @@
+@use '../abstracts' as *;
+
+// ============================================
+// Logo Component (BEM)
+// ============================================
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: $spacing-3;
+    text-decoration: none;
+
+    &__icon {
+        width: 2.25rem;
+        height: 2.25rem;
+        background: linear-gradient(135deg, $color-primary, $color-primary-light);
+        border-radius: $radius-lg;
+        @include flex-center;
+        color: $color-white;
+        font-weight: $font-weight-extrabold;
+        font-size: $font-size-lg;
+    }
+
+    &__text {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $color-secondary;
+        letter-spacing: -0.02em;
+    }
+
+    // --- Variants ---
+
+    &--light {
+        .logo__text {
+            color: $color-white;
+        }
+    }
+}

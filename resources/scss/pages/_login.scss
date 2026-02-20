@@ -1,0 +1,100 @@
+@use '../abstracts' as *;
+
+// ============================================
+// Login Page (BEM)
+// ============================================
+
+.login {
+    &__title {
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-bold;
+        color: $color-secondary;
+        margin-bottom: $spacing-2;
+    }
+
+    &__subtitle {
+        font-size: $font-size-base;
+        color: $color-gray-500;
+        margin-bottom: $spacing-8;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-5;
+    }
+
+    &__remember {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: $spacing-2;
+        font-size: $font-size-sm;
+        color: $color-gray-600;
+        cursor: pointer;
+
+        input[type='checkbox'] {
+            width: 1rem;
+            height: 1rem;
+            accent-color: $color-primary;
+            cursor: pointer;
+        }
+    }
+
+    &__forgot-link {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: $color-primary;
+
+        &:hover {
+            color: $color-primary-dark;
+            text-decoration: underline;
+        }
+    }
+
+    &__error-banner {
+        padding: $spacing-3 $spacing-4;
+        background-color: rgba($color-error, 0.08);
+        border: 1px solid rgba($color-error, 0.2);
+        border-radius: $radius-lg;
+        color: $color-error;
+        font-size: $font-size-sm;
+    }
+
+    &__divider {
+        display: flex;
+        align-items: center;
+        gap: $spacing-4;
+        color: $color-gray-400;
+        font-size: $font-size-sm;
+
+        &::before,
+        &::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: $color-gray-200;
+        }
+    }
+
+    &__signup {
+        text-align: center;
+        font-size: $font-size-sm;
+        color: $color-gray-500;
+
+        a {
+            font-weight: $font-weight-medium;
+            color: $color-primary;
+
+            &:hover {
+                color: $color-primary-dark;
+                text-decoration: underline;
+            }
+        }
+    }
+}

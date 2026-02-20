@@ -1,0 +1,54 @@
+@use '../abstracts' as *;
+
+// ============================================
+// Input / Form Field Component (BEM)
+// ============================================
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+
+    &__label {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: $color-gray-700;
+    }
+
+    &__input {
+        @include input-base;
+    }
+
+    &__error {
+        font-size: $font-size-sm;
+        color: $color-error;
+        min-height: 1.25rem;
+    }
+
+    &__hint {
+        font-size: $font-size-sm;
+        color: $color-gray-500;
+    }
+
+    // --- States ---
+
+    &--error {
+        .form-field__input {
+            border-color: $color-error;
+
+            &:focus {
+                border-color: $color-error;
+                box-shadow: 0 0 0 3px rgba($color-error, 0.1);
+            }
+        }
+    }
+
+    &--disabled {
+        opacity: 0.6;
+
+        .form-field__input {
+            background-color: $color-gray-100;
+            cursor: not-allowed;
+        }
+    }
+}

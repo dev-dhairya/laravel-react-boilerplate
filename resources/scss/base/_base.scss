@@ -1,0 +1,23 @@
+@use '../abstracts' as *;
+
+// ============================================
+// Base / Global Styles
+// ============================================
+
+html {
+    background-color: $color-white;
+}
+
+::selection {
+    background-color: $color-primary-100;
+    color: $color-primary-dark;
+}
+
+:focus-visible {
+    @include focus-ring;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid $color-gray-200;
+}

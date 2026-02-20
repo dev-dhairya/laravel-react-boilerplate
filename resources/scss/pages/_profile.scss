@@ -1,0 +1,142 @@
+@use '../abstracts' as *;
+
+// ============================================
+// Profile Page (BEM)
+// ============================================
+
+.profile {
+    padding: $spacing-12 0;
+    background-color: $color-gray-50;
+    min-height: calc(100vh - 8rem);
+
+    @include respond-to('md') {
+        padding: $spacing-16 0;
+    }
+
+    &__container {
+        @include container;
+        max-width: 48rem;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-8;
+    }
+
+    &__header {
+        display: flex;
+        align-items: center;
+        gap: $spacing-5;
+        padding: $spacing-8;
+        background-color: $color-white;
+        border-radius: $radius-xl;
+        border: 1px solid $color-gray-200;
+    }
+
+    &__avatar {
+        width: 4rem;
+        height: 4rem;
+        border-radius: $radius-full;
+        background: linear-gradient(135deg, $color-primary, $color-primary-light);
+        color: $color-white;
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-bold;
+        @include flex-center;
+        flex-shrink: 0;
+    }
+
+    &__info {
+        min-width: 0;
+    }
+
+    &__name {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-bold;
+        color: $color-secondary;
+        @include text-truncate;
+    }
+
+    &__email {
+        font-size: $font-size-sm;
+        color: $color-gray-500;
+        @include text-truncate;
+    }
+
+    &__section {
+        padding: $spacing-8;
+        background-color: $color-white;
+        border-radius: $radius-xl;
+        border: 1px solid $color-gray-200;
+    }
+
+    &__section-header {
+        margin-bottom: $spacing-6;
+        padding-bottom: $spacing-6;
+        border-bottom: 1px solid $color-gray-100;
+    }
+
+    &__section-title {
+        font-size: $font-size-lg;
+        font-weight: $font-weight-semibold;
+        color: $color-secondary;
+        margin-bottom: $spacing-1;
+    }
+
+    &__section-description {
+        font-size: $font-size-sm;
+        color: $color-gray-500;
+    }
+
+    &__details {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-4;
+    }
+
+    &__detail-row {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-1;
+
+        @include respond-to('sm') {
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+
+    &__detail-label {
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+        color: $color-gray-500;
+
+        @include respond-to('sm') {
+            min-width: 10rem;
+        }
+    }
+
+    &__detail-value {
+        font-size: $font-size-base;
+        color: $color-gray-900;
+    }
+
+    &__success-banner {
+        padding: $spacing-3 $spacing-4;
+        margin-bottom: $spacing-4;
+        background-color: rgba($color-success, 0.08);
+        border: 1px solid rgba($color-success, 0.2);
+        border-radius: $radius-lg;
+        color: $color-success;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-medium;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-5;
+    }
+
+    &__form-actions {
+        display: flex;
+        justify-content: flex-end;
+        padding-top: $spacing-2;
+    }
+}
