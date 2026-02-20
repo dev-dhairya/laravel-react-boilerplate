@@ -1,5 +1,9 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
+    "name": "laravel-react-boilerplate",
+    "description": "A scalable, production-ready boilerplate with Laravel 12, React 19, TypeScript, Inertia.js, and SCSS (BEM).",
+    "author": "Dhairya Bhavsar",
+    "license": "MIT",
     "private": true,
     "type": "module",
     "scripts": {

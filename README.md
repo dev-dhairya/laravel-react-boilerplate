@@ -2,6 +2,8 @@
 
 A scalable, production-ready web application boilerplate built with **Laravel 12**, **React 19**, **TypeScript**, **Inertia.js**, and **SCSS (BEM methodology)**.
 
+> Developed by **[Dhairya Bhavsar](https://github.com/dhairya-bhavsar)** -- Open source and free to use for any project.
+
 ## Tech Stack
 
 | Layer      | Technology                                      |
@@ -533,3 +535,31 @@ php artisan view:cache           # Cache views
 | Page not found (404) | Check `routes/web.php` and ensure the page file exists in `resources/js/pages/` |
 | TypeScript errors | Run `npx tsc --noEmit` to see all type errors |
 | Styles not updating | Make sure the SCSS file is imported in `resources/scss/app.scss` |
+
+---
+
+## Contributing
+
+Contributions are welcome! If you'd like to improve this boilerplate:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+Please ensure your code follows the existing conventions: BEM for SCSS, TypeScript for all frontend code, and Laravel best practices for the backend.
+
+## License
+
+This project is open-sourced software licensed under the [MIT License](LICENSE).
+
+## Author
+
+**Dhairya Bhavsar**
+
+- GitHub: [@dhairya-bhavsar](https://github.com/dhairya-bhavsar)
+
+---
+
+If this boilerplate helped you, give it a star on GitHub!

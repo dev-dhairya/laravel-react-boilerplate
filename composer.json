@@ -1,10 +1,17 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "dhairya-bhavsar/laravel-react-boilerplate",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "A scalable, production-ready boilerplate with Laravel 12, React 19, TypeScript, Inertia.js, and SCSS (BEM).",
+    "keywords": ["laravel", "react", "typescript", "inertia", "scss", "bem", "boilerplate"],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Dhairya Bhavsar",
+            "email": "dhairya.bhavsar@brainvire.com",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": "^8.2",
         "inertiajs/inertia-laravel": "^2.0",
